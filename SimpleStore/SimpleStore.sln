@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore", "SimpleStore\SimpleStore.csproj", "{5E0BB8D0-EC72-493C-B101-3A891D706036}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.Database", "SimpleStore.Database\SimpleStore.Database.csproj", "{A043CA6E-0C90-4204-B191-025FCE519822}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5E0BB8D0-EC72-493C-B101-3A891D706036}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E0BB8D0-EC72-493C-B101-3A891D706036}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E0BB8D0-EC72-493C-B101-3A891D706036}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A043CA6E-0C90-4204-B191-025FCE519822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A043CA6E-0C90-4204-B191-025FCE519822}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A043CA6E-0C90-4204-B191-025FCE519822}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A043CA6E-0C90-4204-B191-025FCE519822}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
