@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SimpleStore.Database.DAL
+namespace SimpleStore.Database.DAL.Enums
 {
-    public class Photo
+    public enum ProductType
     {
     }
 }

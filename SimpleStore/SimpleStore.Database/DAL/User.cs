@@ -27,7 +27,7 @@ namespace SimpleStore.Database.DAL
         /// <summary>
         /// Содержит информацию о пользователе
         /// </summary>
-        public UserInformation Information { get; set; }
+        public UserProfile Profile { get; set; }
         
         /// <summary>
         /// Идентификатор роли пользователя

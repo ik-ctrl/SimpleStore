@@ -11,7 +11,7 @@ namespace SimpleStore.Database
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().OwnsOne(u => u.Information);
+            modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
             
         }
 
@@ -22,7 +22,7 @@ namespace SimpleStore.Database
         public DbSet<ProductCategory> Categories { get; set; }
         public DbSet<ShoppingCart> Carts { get; set; }
         public DbSet<ProductReview> Reviews { get; set; }
-        public DbSet<Photo> ProductPhotos { get; set; }
+        public DbSet<ProductImage> ProductPhotos { get; set; }
 
     }
 }
