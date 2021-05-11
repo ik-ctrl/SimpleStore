@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SimpleStore.Database.DAL
 {
@@ -14,6 +12,21 @@ namespace SimpleStore.Database.DAL
         /// <summary>
         /// Список продуктов
         /// </summary>
-        private ICollection<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; }
+        
+        /// <summary>
+        /// Финальная цена
+        /// </summary>
+        public double FinalPrice { get; set; }
+        
+        /// <summary>
+        /// Идентификатор пользователя
+        /// </summary>
+        public int UserId { get; set; }
+
+        /// <summary>
+        /// Навигационное свойство пользователя
+        /// </summary>
+        public User User { get; set; }
     }
 }

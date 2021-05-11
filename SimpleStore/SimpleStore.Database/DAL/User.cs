@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-
-namespace SimpleStore.Database.DAL
+﻿namespace SimpleStore.Database.DAL
 {
     public class User
     {
@@ -15,9 +13,9 @@ namespace SimpleStore.Database.DAL
         public string Email { get; set; }
         
         /// <summary>
-        /// Хэш пароля
+        /// Пароль
         /// </summary>
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
 
         /// <summary>
         /// Ник пользователя

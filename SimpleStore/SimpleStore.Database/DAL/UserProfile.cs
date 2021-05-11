@@ -1,6 +1,4 @@
-﻿using System.Net.Sockets;
-
-namespace SimpleStore.Database.DAL
+﻿namespace SimpleStore.Database.DAL
 {
     public class UserProfile
     {
