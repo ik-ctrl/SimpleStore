@@ -12,15 +12,12 @@ namespace SimpleStore.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region  user + role 
             var roles = new List<UserRole>()
             {
                 new UserRole(){Id = 1,Role="user"},
                 new UserRole(){Id = 2,Role="admin"},
             };
             modelBuilder.Entity<UserRole>().HasData(roles);
-
-
             var adminProfile = new UserProfile()
             {
                 Name = "Admin",
@@ -29,7 +26,6 @@ namespace SimpleStore.Database
                 Street = "Пушкино",
                 PhoneNumber = "+77777777777",
             };
-
             var userProfile = new UserProfile()
             {
                 Name = "User",
@@ -38,7 +34,6 @@ namespace SimpleStore.Database
                 Street = "Жуковского",
                 PhoneNumber = "+77777777777",
             };
-
             var admin = new User()
             {
                 Id = 1,
@@ -49,7 +44,6 @@ namespace SimpleStore.Database
                 Role = roles[1],
                 RoleId = roles[1].Id
             };
-
             var simpleUser = new User()
             {
                 Id = 2,
@@ -60,17 +54,8 @@ namespace SimpleStore.Database
                 Role = roles[0],
                 RoleId = roles[0].Id
             };
-
             modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
             modelBuilder.Entity<User>().HasData(admin, simpleUser);
-            #endregion
-            
-            modelBuilder.Entity<>()
-            
-            
-            
-            
-
         }
 
         public DbSet<User> Users { get; set; }
