@@ -13,8 +13,9 @@
         public int Title { get; set; }
         
         /// <summary>
-        /// Картинка в байтах
+        /// Путь до изображения относительно сервера
         /// </summary>
-        public byte[] ImageData { get; set; }
+        public string ImagePath { get; set; }
+        
     }
 }

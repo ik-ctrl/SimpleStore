@@ -12,7 +12,7 @@ namespace SimpleStore.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region  user + role  create data
+            #region  user + role 
             var roles = new List<UserRole>()
             {
                 new UserRole(){Id = 1,Role="user"},
@@ -44,7 +44,7 @@ namespace SimpleStore.Database
                 Id = 1,
                 Email = "admin@admin.ru",
                 NickName = "admin",
-                Password ="admin",
+                Password = "admin",
                 Profile = adminProfile,
                 Role = roles[1],
                 RoleId = roles[1].Id
@@ -63,7 +63,13 @@ namespace SimpleStore.Database
 
             modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
             modelBuilder.Entity<User>().HasData(admin, simpleUser);
-
+            #endregion
+            
+            modelBuilder.Entity<>()
+            
+            
+            
+            
 
         }
 
