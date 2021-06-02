@@ -5,7 +5,7 @@
         /// <summary>
         /// Идентификатор пользователя 
         /// </summary>
-        public int Id { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// Почта пользователя
@@ -22,6 +22,11 @@
         /// </summary>
         public string NickName { get; set; }
 
+        /// <summary>
+        /// Идентификатор профиля
+        /// </summary>
+        public int ProfileId { get; set; }
+        
         /// <summary>
         /// Содержит информацию о пользователе
         /// </summary>

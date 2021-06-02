@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SimpleStore.Database.DAL;
+
 
 namespace SimpleStore.Database
 {
     public sealed class StoreContext : DbContext
     {
-        public StoreContext(DbContextOptions<StoreContext> options) : base(options)
-        {
-        }
+        public StoreContext(DbContextOptions<StoreContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -18,53 +18,48 @@ namespace SimpleStore.Database
                 new UserRole(){Id = 2,Role="admin"},
             };
             modelBuilder.Entity<UserRole>().HasData(roles);
-            var adminProfile = new UserProfile()
-            {
-                Name = "Admin",
-                Surname = "Admin",
-                City = "Моксва",
-                Street = "Пушкино",
-                PhoneNumber = "+77777777777",
-            };
-            var userProfile = new UserProfile()
-            {
-                Name = "User",
-                Surname = "User",
-                City = "Кстово",
-                Street = "Жуковского",
-                PhoneNumber = "+77777777777",
-            };
-            var admin = new User()
-            {
-                Id = 1,
-                Email = "admin@admin.ru",
-                NickName = "admin",
-                Password = "admin",
-                Profile = adminProfile,
-                Role = roles[1],
-                RoleId = roles[1].Id
-            };
-            var simpleUser = new User()
-            {
-                Id = 2,
-                Email = "user@user.ru",
-                NickName = "user",
-                Password = "user",
-                Profile = userProfile,
-                Role = roles[0],
-                RoleId = roles[0].Id
-            };
-            modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
-            modelBuilder.Entity<User>().HasData(admin, simpleUser);
-        }
 
+            modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
+        }
+        
+        /// <summary>
+        /// Таблица пользователей сайта
+        /// </summary>
         public DbSet<User> Users { get; set; }
+        
+        /// <summary>
+        /// Таблица ролей пользователей
+        /// </summary>
         public DbSet<UserRole> Roles { get; set; }
+        
+        /// <summary>
+        /// Таблица продуктов
+        /// </summary>
         public DbSet<Product> Products { get; set; }
+        
+        /// <summary>
+        /// Таблица заказов
+        /// </summary>
         public DbSet<Order> Orders { get; set; }
+        
+        /// <summary>
+        /// Категории продуктов
+        /// </summary>
         public DbSet<ProductCategory> Categories { get; set; }
+        
+        /// <summary>
+        /// Корзина пользователя
+        /// </summary>
         public DbSet<ShoppingCart> Carts { get; set; }
+        
+        /// <summary>
+        /// Отзывы о товарах
+        /// </summary>
         public DbSet<ProductReview> Reviews { get; set; }
+        
+        /// <summary>
+        /// Таблица  с информацией о фотографиях
+        /// </summary>
         public DbSet<ProductImage> ProductPhotos { get; set; }
 
     }

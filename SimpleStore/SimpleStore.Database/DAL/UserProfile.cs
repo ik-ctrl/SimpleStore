@@ -3,6 +3,10 @@
     public class UserProfile
     {
         /// <summary>
+        /// Идентификатор карточки информации
+        /// </summary>
+        public int ProfileId { get; set; }
+        /// <summary>
         /// Имя пользователя
         /// </summary>
         public string Name { get; set; }
@@ -26,5 +30,15 @@
         /// Улица доставки
         /// </summary>
         public string Street { get; set; }
+        
+        /// <summary>
+        /// Идентификатор пользователя
+        /// </summary>
+        public int UserId { get; set; }
+        
+        /// <summary>
+        /// Навигационное свойство на пользователя
+        /// </summary>
+        public User User { get; set; }
     }
 }

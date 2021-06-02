@@ -22,7 +22,7 @@ namespace SimpleStore.Database.DAL
         /// <summary>
         /// Идентификатор пользователя
         /// </summary>
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// Навигационное свойство пользователя
