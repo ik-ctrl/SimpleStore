@@ -1,7 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SimpleStore.Database.DAL;
+using SimpleStore.Database.Enums;
 
 
 namespace SimpleStore.Database
@@ -12,24 +17,52 @@ namespace SimpleStore.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //todo: вынести в отдельный метод
-            
-            var catigories= new List<ProductCategory>()
-            {
-                new ProductCategory(){Id=1,Name="Книги"},
-                new ProductCategory()
-            }
-            
+            modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
+            modelBuilder.Entity<ProductCategory>()
+                .Property(pc => pc.Category)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (CategoryEnum)Enum.Parse(typeof(CategoryEnum), v));
+
+            SeedProductCategories(modelBuilder);
             SeedUserRoles(modelBuilder);
 
-            modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
+            var admin = new User()
+            {
+                UserId = 0,
+                Email = "admin@amin.ru",
+                NickName = "admin",
+                Password =
+            };
+
+
+
+        }
+
+
+
+        /// <summary>
+        /// Сидирование категорий продуктов
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        private void SeedProductCategories(ModelBuilder modelBuilder)
+        {
+            var categories = new List<ProductCategory>()
+            {
+                new ProductCategory() {Id = 0, Category = CategoryEnum.Books},
+                new ProductCategory() {Id = 1, Category = CategoryEnum.Electronics},
+                new ProductCategory() {Id = 2, Category = CategoryEnum.Wear},
+                new ProductCategory() {Id = 3, Category = CategoryEnum.Sports},
+                new ProductCategory() {Id = 4, Category = CategoryEnum.Footwear},
+            };
+            modelBuilder.Entity<ProductCategory>().HasData(categories);
         }
 
         /// <summary>
-        /// Метод для сидирования ролей
+        /// Cидирование ролей
         /// </summary>
         /// <param name="modelBuilder"></param>
-        private  void SeedUserRoles(ModelBuilder modelBuilder)
+        private void SeedUserRoles(ModelBuilder modelBuilder)
         {
             var roles = new List<UserRole>()
             {
@@ -40,40 +73,60 @@ namespace SimpleStore.Database
         }
 
         /// <summary>
+        /// Получить хэщ засоленного пароля
+        /// </summary>
+        /// <param name="password">пароль</param>
+        /// <param name="salt">соль</param>
+        /// <returns>Возвращает хэш засоленного пароля в нижнем регистре </returns>
+        private string GetHashFromSalPassword(string password, string salt)
+        {
+            var checkArguments = string.IsNullOrEmpty(password) || string.IsNullOrEmpty(salt);
+            Contract.Requires<ArgumentNullException>(!checkArguments, "Password or salt is null");
+            var saltPassword = password + salt;
+            string resultHash;
+            using (var shaManager = new SHA256Managed())
+            {
+                var bytes = Encoding.UTF8.GetBytes(saltPassword);
+                var hash= shaManager.ComputeHash(bytes);
+                resultHash = BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
+            }
+            return resultHash;
+        }
+        /// <summary>
         /// Таблица пользователей сайта
         /// </summary>
         public DbSet<User> Users { get; set; }
-        
+
         /// <summary>
         /// Таблица ролей пользователей
         /// </summary>
         public DbSet<UserRole> Roles { get; set; }
-        
+
         /// <summary>
         /// Таблица продуктов
         /// </summary>
         public DbSet<Product> Products { get; set; }
-        
+
         /// <summary>
         /// Таблица заказов
         /// </summary>
         public DbSet<Order> Orders { get; set; }
-        
+
         /// <summary>
         /// Категории продуктов
         /// </summary>
         public DbSet<ProductCategory> Categories { get; set; }
-        
+
         /// <summary>
         /// Корзина пользователя
         /// </summary>
         public DbSet<ShoppingCart> Carts { get; set; }
-        
+
         /// <summary>
         /// Отзывы о товарах
         /// </summary>
         public DbSet<ProductReview> Reviews { get; set; }
-        
+
         /// <summary>
         /// Таблица  с информацией о фотографиях
         /// </summary>
