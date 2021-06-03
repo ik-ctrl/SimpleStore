@@ -15,6 +15,46 @@ namespace SimpleStore.Database
     {
         public StoreContext(DbContextOptions<StoreContext> options) : base(options) { }
 
+        /// <summary>
+        /// Таблица пользователей сайта
+        /// </summary>
+        public DbSet<User> Users { get; set; }
+
+        /// <summary>
+        /// Таблица ролей пользователей
+        /// </summary>
+        public DbSet<UserRole> Roles { get; set; }
+
+        /// <summary>
+        /// Таблица продуктов
+        /// </summary>
+        public DbSet<Product> Products { get; set; }
+
+        /// <summary>
+        /// Таблица заказов
+        /// </summary>
+        public DbSet<Order> Orders { get; set; }
+
+        /// <summary>
+        /// Категории продуктов
+        /// </summary>
+        public DbSet<ProductCategory> Categories { get; set; }
+
+        /// <summary>
+        /// Корзина пользователя
+        /// </summary>
+        public DbSet<ShoppingCart> Carts { get; set; }
+
+        /// <summary>
+        /// Отзывы о товарах
+        /// </summary>
+        public DbSet<ProductReview> Reviews { get; set; }
+
+        /// <summary>
+        /// Таблица  с информацией о фотографиях
+        /// </summary>
+        public DbSet<ProductImage> ProductPhotos { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
@@ -27,20 +67,9 @@ namespace SimpleStore.Database
             SeedProductCategories(modelBuilder);
             SeedUserRoles(modelBuilder);
 
-            var admin = new User()
-            {
-                UserId = 0,
-                Email = "admin@amin.ru",
-                NickName = "admin",
-                Password =
-            };
-
-
-
         }
 
-
-
+        #region Helps methods
         /// <summary>
         /// Сидирование категорий продуктов
         /// </summary>
@@ -87,50 +116,16 @@ namespace SimpleStore.Database
             using (var shaManager = new SHA256Managed())
             {
                 var bytes = Encoding.UTF8.GetBytes(saltPassword);
-                var hash= shaManager.ComputeHash(bytes);
+                var hash = shaManager.ComputeHash(bytes);
                 resultHash = BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
             }
             return resultHash;
         }
-        /// <summary>
-        /// Таблица пользователей сайта
-        /// </summary>
-        public DbSet<User> Users { get; set; }
 
-        /// <summary>
-        /// Таблица ролей пользователей
-        /// </summary>
-        public DbSet<UserRole> Roles { get; set; }
 
-        /// <summary>
-        /// Таблица продуктов
-        /// </summary>
-        public DbSet<Product> Products { get; set; }
+        #endregion
 
-        /// <summary>
-        /// Таблица заказов
-        /// </summary>
-        public DbSet<Order> Orders { get; set; }
-
-        /// <summary>
-        /// Категории продуктов
-        /// </summary>
-        public DbSet<ProductCategory> Categories { get; set; }
-
-        /// <summary>
-        /// Корзина пользователя
-        /// </summary>
-        public DbSet<ShoppingCart> Carts { get; set; }
-
-        /// <summary>
-        /// Отзывы о товарах
-        /// </summary>
-        public DbSet<ProductReview> Reviews { get; set; }
-
-        /// <summary>
-        /// Таблица  с информацией о фотографиях
-        /// </summary>
-        public DbSet<ProductImage> ProductPhotos { get; set; }
+       
 
     }
 }
