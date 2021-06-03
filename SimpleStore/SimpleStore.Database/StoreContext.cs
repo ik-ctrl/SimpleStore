@@ -12,16 +12,33 @@ namespace SimpleStore.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var roles = new List<UserRole>()
+            //todo: вынести в отдельный метод
+            
+            var catigories= new List<ProductCategory>()
             {
-                new UserRole(){Id = 1,Role="user"},
-                new UserRole(){Id = 2,Role="admin"},
-            };
-            modelBuilder.Entity<UserRole>().HasData(roles);
+                new ProductCategory(){Id=1,Name="Книги"},
+                new ProductCategory()
+            }
+            
+            SeedUserRoles(modelBuilder);
 
             modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
         }
-        
+
+        /// <summary>
+        /// Метод для сидирования ролей
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        private  void SeedUserRoles(ModelBuilder modelBuilder)
+        {
+            var roles = new List<UserRole>()
+            {
+                new UserRole() {Id = 1, Role = "user"},
+                new UserRole() {Id = 2, Role = "admin"},
+            };
+            modelBuilder.Entity<UserRole>().HasData(roles);
+        }
+
         /// <summary>
         /// Таблица пользователей сайта
         /// </summary>

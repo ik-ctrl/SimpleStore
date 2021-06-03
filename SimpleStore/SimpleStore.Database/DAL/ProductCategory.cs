@@ -1,4 +1,6 @@
-﻿namespace SimpleStore.Database.DAL
+﻿using SimpleStore.Database.Enums;
+
+namespace SimpleStore.Database.DAL
 {
     public class ProductCategory
     {
@@ -8,8 +10,8 @@
         public int Id { get; set; }
         
         /// <summary>
-        /// Название категории
+        /// Тип категории
         /// </summary>
-        public string Name { get; set; }
+        public CategoryEnum Category { get; set; }
     }
 }
