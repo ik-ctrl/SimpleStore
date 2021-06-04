@@ -54,7 +54,7 @@ namespace SimpleStore.Database
         /// Таблица  с информацией о фотографиях
         /// </summary>
         public DbSet<ProductImage> ProductPhotos { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
@@ -66,6 +66,64 @@ namespace SimpleStore.Database
 
             SeedProductCategories(modelBuilder);
             SeedUserRoles(modelBuilder);
+
+            var adminRole = new UserRole() { Id = 1, Role = "user" };
+
+            var userRole = new UserRole() { Id = 2, Role = "admin" };
+
+            var user = new User()
+            {
+                Id = 0,
+                NickName = "user",
+                Email = "user@user.ru",
+                Password = GetHashFromSalPassword("user","user"),
+                Role = userRole,
+                RoleId = userRole.Id
+            };
+
+            var userProfile = new UserProfile()
+            {
+                Id = 0,
+                City = "Кстово",
+                Name = "Илья",
+                Surname = "Оконовц",
+                PhoneNumber = "88005553535",
+                Street = "Жуковского",
+                User = user,
+                UserId = user.Id
+            };
+
+            user.ProfileId = userProfile.Id;
+            user.Profile = userProfile;
+
+
+            var admin = new User()
+            {
+                Id = 1,
+                NickName = "admin",
+                Email = "admin@admin.ru",
+                Password = GetHashFromSalPassword("admin", "admin"),
+                Role = adminRole,
+                RoleId = adminRole.Id
+            };
+
+            var adminProfile = new UserProfile()
+            {
+                Id = 1,
+                City = "Нижний Новгород",
+                Name = "Илья",
+                Surname = "Оконов",
+                PhoneNumber = "88005553535",
+                Street = "Энчпочмакова",
+                User = admin,
+                UserId = admin.Id
+            };
+            admin.ProfileId = adminProfile.Id;
+            admin.Profile = adminProfile;
+
+            modelBuilder.Entity<User>().OwnsOne(u => u.Profile).HasData(user, admin);
+
+
 
         }
 
@@ -101,6 +159,8 @@ namespace SimpleStore.Database
             modelBuilder.Entity<UserRole>().HasData(roles);
         }
 
+
+        //todo: возможно стоит вынести в главный проект
         /// <summary>
         /// Получить хэщ засоленного пароля
         /// </summary>
@@ -125,7 +185,7 @@ namespace SimpleStore.Database
 
         #endregion
 
-       
+
 
     }
 }
