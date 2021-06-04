@@ -5,7 +5,7 @@
         /// <summary>
         /// Идентификатор карточки информации
         /// </summary>
-        public int ProfileId { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// Имя пользователя
         /// </summary>

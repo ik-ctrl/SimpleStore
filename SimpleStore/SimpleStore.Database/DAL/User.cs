@@ -5,7 +5,7 @@
         /// <summary>
         /// Идентификатор пользователя 
         /// </summary>
-        public int UserId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Почта пользователя
