@@ -38,25 +38,20 @@ namespace SimpleStore.Database.DAL
         /// Навигационное свойство категории
         /// </summary>
         public ProductCategory Category { get; set; }
-        
+
+        /// <summary>
+        /// Количества товаров на складе
+        /// </summary>
+        public int RemainingProduct { get; set; }
+
         /// <summary>
         /// Список отзывов о товаре
         /// </summary>
         public ICollection<ProductReview> Reviews { get; set; }
         
         /// <summary>
-        /// Количества товаров на складе
-        /// </summary>
-        public int Count { get; set; }
-        
-        /// <summary>
-        /// Идентификатор изображения
-        /// </summary>
-        public int ImageId { get; set; }
-        
-        /// <summary>
         /// Изобрадения продукта
         /// </summary>
-        public ProductImage Image { get; set; }
+        public ICollection<ProductImage> Images { get; set; }
     }
 }

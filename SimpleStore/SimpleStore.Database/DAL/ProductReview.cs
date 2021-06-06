@@ -26,5 +26,15 @@
         ///  Пользовательские данные
         /// </summary>
         public User User { get; set; }
+        
+        /// <summary>
+        /// Идентификатор продукта
+        /// </summary>
+        public int ProductId { get; set; }
+        
+        /// <summary>
+        /// Навигационное свойтсво продукта
+        /// </summary>
+        public Product Product { get; set; }
     }
 }
