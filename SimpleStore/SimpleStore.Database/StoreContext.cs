@@ -57,19 +57,33 @@ namespace SimpleStore.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
+            //modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
             modelBuilder.Entity<ProductCategory>()
                 .Property(pc => pc.Category)
                 .HasConversion(
                     v => v.ToString(),
                     v => (CategoryEnum)Enum.Parse(typeof(CategoryEnum), v));
 
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.Reviews)
+                .WithOne(r => r.Product)
+                .HasForeignKey(r => r.ProductId);
+
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.Images)
+                .WithOne(i => i.Product)
+                .HasForeignKey(i => i.ProductId);
+
+
+            var userRoles = new List<UserRole>()
+            {
+                new UserRole() {Id = 0, Role = "user"},
+                new UserRole() {Id = 1, Role = "admin"}
+            };
+            
+            SeedUserRoles(modelBuilder,userRoles);
             SeedProductCategories(modelBuilder);
-            SeedUserRoles(modelBuilder);
-
-            var adminRole = new UserRole() { Id = 1, Role = "user" };
-
-            var userRole = new UserRole() { Id = 2, Role = "admin" };
+          
 
             var user = new User()
             {
@@ -77,10 +91,9 @@ namespace SimpleStore.Database
                 NickName = "user",
                 Email = "user@user.ru",
                 Password = GetHashFromSalPassword("user","user"),
-                Role = userRole,
-                RoleId = userRole.Id
+                Role = userRoles[0],
+                RoleId = userRoles[0].Id
             };
-
             var userProfile = new UserProfile()
             {
                 Id = 0,
@@ -92,7 +105,6 @@ namespace SimpleStore.Database
                 User = user,
                 UserId = user.Id
             };
-
             user.ProfileId = userProfile.Id;
             user.Profile = userProfile;
 
@@ -103,10 +115,9 @@ namespace SimpleStore.Database
                 NickName = "admin",
                 Email = "admin@admin.ru",
                 Password = GetHashFromSalPassword("admin", "admin"),
-                Role = adminRole,
-                RoleId = adminRole.Id
+                Role = userRoles[1],
+                RoleId = userRoles[1].Id
             };
-
             var adminProfile = new UserProfile()
             {
                 Id = 1,
@@ -122,7 +133,6 @@ namespace SimpleStore.Database
             admin.Profile = adminProfile;
 
             modelBuilder.Entity<User>().OwnsOne(u => u.Profile).HasData(user, admin);
-
 
 
         }
@@ -149,14 +159,9 @@ namespace SimpleStore.Database
         /// Cидирование ролей
         /// </summary>
         /// <param name="modelBuilder"></param>
-        private void SeedUserRoles(ModelBuilder modelBuilder)
+        private void SeedUserRoles(ModelBuilder modelBuilder,List<UserRole> userRoles)
         {
-            var roles = new List<UserRole>()
-            {
-                new UserRole() {Id = 1, Role = "user"},
-                new UserRole() {Id = 2, Role = "admin"},
-            };
-            modelBuilder.Entity<UserRole>().HasData(roles);
+            modelBuilder.Entity<UserRole>().HasData(userRoles);
         }
 
 
@@ -181,8 +186,6 @@ namespace SimpleStore.Database
             }
             return resultHash;
         }
-
-
         #endregion
 
 
