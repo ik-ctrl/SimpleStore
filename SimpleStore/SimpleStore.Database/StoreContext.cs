@@ -55,9 +55,10 @@ namespace SimpleStore.Database
         /// </summary>
         public DbSet<ProductImage> ProductPhotos { get; set; }
 
+        //todo: добавить связь один ко многим для ShoppingCart и Orders
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
+            modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
             modelBuilder.Entity<ProductCategory>()
                 .Property(pc => pc.Category)
                 .HasConversion(
@@ -73,71 +74,13 @@ namespace SimpleStore.Database
                 .HasMany(p => p.Images)
                 .WithOne(i => i.Product)
                 .HasForeignKey(i => i.ProductId);
-
-
-            var userRoles = new List<UserRole>()
-            {
-                new UserRole() {Id = 0, Role = "user"},
-                new UserRole() {Id = 1, Role = "admin"}
-            };
             
-            SeedUserRoles(modelBuilder,userRoles);
+            
+            SeedUserRoles(modelBuilder);
             SeedProductCategories(modelBuilder);
-          
-
-            var user = new User()
-            {
-                Id = 0,
-                NickName = "user",
-                Email = "user@user.ru",
-                Password = GetHashFromSalPassword("user","user"),
-                Role = userRoles[0],
-                RoleId = userRoles[0].Id
-            };
-            var userProfile = new UserProfile()
-            {
-                Id = 0,
-                City = "Кстово",
-                Name = "Илья",
-                Surname = "Оконовц",
-                PhoneNumber = "88005553535",
-                Street = "Жуковского",
-                User = user,
-                UserId = user.Id
-            };
-            user.ProfileId = userProfile.Id;
-            user.Profile = userProfile;
-
-
-            var admin = new User()
-            {
-                Id = 1,
-                NickName = "admin",
-                Email = "admin@admin.ru",
-                Password = GetHashFromSalPassword("admin", "admin"),
-                Role = userRoles[1],
-                RoleId = userRoles[1].Id
-            };
-            var adminProfile = new UserProfile()
-            {
-                Id = 1,
-                City = "Нижний Новгород",
-                Name = "Илья",
-                Surname = "Оконов",
-                PhoneNumber = "88005553535",
-                Street = "Энчпочмакова",
-                User = admin,
-                UserId = admin.Id
-            };
-            admin.ProfileId = adminProfile.Id;
-            admin.Profile = adminProfile;
-
-            modelBuilder.Entity<User>().OwnsOne(u => u.Profile).HasData(user, admin);
-
 
         }
 
-        #region Helps methods
         /// <summary>
         /// Сидирование категорий продуктов
         /// </summary>
@@ -146,11 +89,11 @@ namespace SimpleStore.Database
         {
             var categories = new List<ProductCategory>()
             {
-                new ProductCategory() {Id = 0, Category = CategoryEnum.Books},
-                new ProductCategory() {Id = 1, Category = CategoryEnum.Electronics},
-                new ProductCategory() {Id = 2, Category = CategoryEnum.Wear},
-                new ProductCategory() {Id = 3, Category = CategoryEnum.Sports},
-                new ProductCategory() {Id = 4, Category = CategoryEnum.Footwear},
+                new ProductCategory() {Id = 1, Category = CategoryEnum.Books},
+                new ProductCategory() {Id = 2, Category = CategoryEnum.Electronics},
+                new ProductCategory() {Id = 3, Category = CategoryEnum.Wear},
+                new ProductCategory() {Id = 4, Category = CategoryEnum.Sports},
+                new ProductCategory() {Id = 5, Category = CategoryEnum.Footwear},
             };
             modelBuilder.Entity<ProductCategory>().HasData(categories);
         }
@@ -159,36 +102,15 @@ namespace SimpleStore.Database
         /// Cидирование ролей
         /// </summary>
         /// <param name="modelBuilder"></param>
-        private void SeedUserRoles(ModelBuilder modelBuilder,List<UserRole> userRoles)
+        private void SeedUserRoles(ModelBuilder modelBuilder) 
         {
+            var userRoles = new List<UserRole>()
+            {
+                new UserRole() {Id = 1, Role = "user"},
+                new UserRole() {Id = 2, Role = "admin"}
+            };
             modelBuilder.Entity<UserRole>().HasData(userRoles);
         }
-
-
-        //todo: возможно стоит вынести в главный проект
-        /// <summary>
-        /// Получить хэщ засоленного пароля
-        /// </summary>
-        /// <param name="password">пароль</param>
-        /// <param name="salt">соль</param>
-        /// <returns>Возвращает хэш засоленного пароля в нижнем регистре </returns>
-        private string GetHashFromSalPassword(string password, string salt)
-        {
-            var checkArguments = string.IsNullOrEmpty(password) || string.IsNullOrEmpty(salt);
-            Contract.Requires<ArgumentNullException>(!checkArguments, "Password or salt is null");
-            var saltPassword = password + salt;
-            string resultHash;
-            using (var shaManager = new SHA256Managed())
-            {
-                var bytes = Encoding.UTF8.GetBytes(saltPassword);
-                var hash = shaManager.ComputeHash(bytes);
-                resultHash = BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
-            }
-            return resultHash;
-        }
-        #endregion
-
-
 
     }
 }
