@@ -1,4 +1,6 @@
-﻿namespace SimpleStore.Database.DAL
+﻿using SimpleStore.Database.DAL.Enums;
+
+namespace SimpleStore.Database.DAL
 {
     public class UserRole
     {
@@ -10,6 +12,6 @@
         /// <summary>
         /// Название роли
         /// </summary>
-        public string Role { get; set; }
+        public Role Role { get; set; }
     }
 }

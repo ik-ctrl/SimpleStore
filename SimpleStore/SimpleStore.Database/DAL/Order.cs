@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SimpleStore.Database.DAL.Enums;
 
 namespace SimpleStore.Database.DAL
 {
@@ -12,12 +13,17 @@ namespace SimpleStore.Database.DAL
         /// <summary>
         /// Список продуктов
         /// </summary>
-        public ICollection<Product> Products { get; set; }
+        public ICollection<SelectedProduct> Products { get; set; }
 
         /// <summary>
         /// Финальная цена
         /// </summary>
         public double FinalPrice { get; set; }
+        
+        /// <summary>
+        /// Состояние заказа
+        /// </summary>
+        public OrderState State { get; set; }
 
         /// <summary>
         /// Идентификатор пользователя

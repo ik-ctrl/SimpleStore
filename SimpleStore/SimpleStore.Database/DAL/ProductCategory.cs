@@ -12,6 +12,6 @@ namespace SimpleStore.Database.DAL
         /// <summary>
         /// Тип категории
         /// </summary>
-        public CategoryEnum Category { get; set; }
+        public Category Category { get; set; }
     }
 }

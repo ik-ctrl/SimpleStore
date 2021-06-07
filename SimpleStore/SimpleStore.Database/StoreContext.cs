@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SimpleStore.Database.DAL;
+using SimpleStore.Database.DAL.Enums;
 using SimpleStore.Database.Enums;
 
 
@@ -41,11 +42,6 @@ namespace SimpleStore.Database
         public DbSet<ProductCategory> Categories { get; set; }
 
         /// <summary>
-        /// Корзина пользователя
-        /// </summary>
-        public DbSet<ShoppingCart> Carts { get; set; }
-
-        /// <summary>
         /// Отзывы о товарах
         /// </summary>
         public DbSet<ProductReview> Reviews { get; set; }
@@ -55,16 +51,22 @@ namespace SimpleStore.Database
         /// </summary>
         public DbSet<ProductImage> ProductPhotos { get; set; }
 
-        //todo: добавить связь один ко многим для ShoppingCart и Orders
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().OwnsOne(u => u.Profile);
+            
+            modelBuilder.Entity<UserRole>()
+                .Property(r=>r.Role)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (Role)Enum.Parse(typeof(Role), v));
+
             modelBuilder.Entity<ProductCategory>()
                 .Property(pc => pc.Category)
                 .HasConversion(
                     v => v.ToString(),
-                    v => (CategoryEnum)Enum.Parse(typeof(CategoryEnum), v));
-
+                    v => (Category)Enum.Parse(typeof(Category), v));
+            
             modelBuilder.Entity<Product>()
                 .HasMany(p => p.Reviews)
                 .WithOne(r => r.Product)
@@ -74,8 +76,18 @@ namespace SimpleStore.Database
                 .HasMany(p => p.Images)
                 .WithOne(i => i.Product)
                 .HasForeignKey(i => i.ProductId);
-            
-            
+
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.Products)
+                .WithOne(sp => sp.Order)
+                .HasForeignKey(sp => sp.OrderId);
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.State)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (OrderState)Enum.Parse(typeof(OrderState), v));
+
             SeedUserRoles(modelBuilder);
             SeedProductCategories(modelBuilder);
 
@@ -89,11 +101,11 @@ namespace SimpleStore.Database
         {
             var categories = new List<ProductCategory>()
             {
-                new ProductCategory() {Id = 1, Category = CategoryEnum.Books},
-                new ProductCategory() {Id = 2, Category = CategoryEnum.Electronics},
-                new ProductCategory() {Id = 3, Category = CategoryEnum.Wear},
-                new ProductCategory() {Id = 4, Category = CategoryEnum.Sports},
-                new ProductCategory() {Id = 5, Category = CategoryEnum.Footwear},
+                new ProductCategory() {Id = 1, Category = Category.Books},
+                new ProductCategory() {Id = 2, Category = Category.Electronics},
+                new ProductCategory() {Id = 3, Category = Category.Wear},
+                new ProductCategory() {Id = 4, Category = Category.Sports},
+                new ProductCategory() {Id = 5, Category = Category.Footwear},
             };
             modelBuilder.Entity<ProductCategory>().HasData(categories);
         }
@@ -106,11 +118,10 @@ namespace SimpleStore.Database
         {
             var userRoles = new List<UserRole>()
             {
-                new UserRole() {Id = 1, Role = "user"},
-                new UserRole() {Id = 2, Role = "admin"}
+                new UserRole() {Id = 1, Role = Role.User},
+                new UserRole() {Id = 2, Role = Role.Admin}
             };
             modelBuilder.Entity<UserRole>().HasData(userRoles);
         }
-
     }
 }
