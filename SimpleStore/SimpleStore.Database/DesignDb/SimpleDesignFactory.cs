@@ -10,15 +10,10 @@ namespace SimpleStore.Database.DesignDb
     {
         public StoreContext CreateDbContext(string[] args)
         {
-            //var config = new ConfigurationBuilder()
-            //    .SetBasePath(Directory.GetCurrentDirectory())
-            //    .AddJsonFile("appsettings.json")
-            //    .Build();
-
-            //var connectionString = config.GetConnectionString("DefaultConnection");
-
+            //todo: сделать чтение из файла dbSettigns.json
+            var connectionString="Host=localhost;Port=5432;Database=StoreDatabase;Username=postgres;Password=postgres;ApplicationName=SimpleStore";
             var optionsBuilder = new DbContextOptionsBuilder<StoreContext>();
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=StoreDatabase;Username=postgres;Password=postgres;ApplicationName=SimpleStore",
+            optionsBuilder.UseNpgsql(connectionString,
                 opts => opts.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds));
             return new StoreContext(optionsBuilder.Options);
         }
