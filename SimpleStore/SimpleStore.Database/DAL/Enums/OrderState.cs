@@ -5,9 +5,9 @@
     /// </summary>
     public enum OrderState
     {
-        Formed,
-        Paid,
-        Delivered,
-        Returns
+        Formed=0,
+        Paid=1,
+        Delivered=2,
+        Returns=3
     }
 }
