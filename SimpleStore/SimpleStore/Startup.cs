@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SimpleStore.Database;
 
 namespace SimpleStore
 {
@@ -23,6 +25,7 @@ namespace SimpleStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            RegistryDbContext(services);
             services.AddControllersWithViews();
         }
 
@@ -52,6 +55,19 @@ namespace SimpleStore
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        /// <summary>
+        /// Регистрация DbContext
+        /// </summary>
+        /// <param name="services"></param>
+        private void RegistryDbContext(IServiceCollection services)
+        {
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            if (string.IsNullOrEmpty(connectionString))
+                connectionString =
+                    "Host=localhost;Port=5432;Database=StoreDatabase;Username=postgres;Password=postgres;ApplicationName=SimpleStore;ConnectionIdleLifetime=5";
+            services.AddDbContext<StoreContext>(opt => opt.UseNpgsql(connectionString));
         }
     }
 }
