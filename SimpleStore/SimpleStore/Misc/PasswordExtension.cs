@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SimpleStore.Misc
 {
-    public  static class PasswordExtension
+    internal static class PasswordExtension
     {
         /// <summary>
         /// Получить хэщ засоленного пароля
@@ -13,7 +13,7 @@ namespace SimpleStore.Misc
         /// <param name="password">пароль</param>
         /// <param name="salt">соль</param>
         /// <returns>Возвращает хэш засоленного пароля в нижнем регистре </returns>
-        private static string GetHashFromSalPassword(string password, string salt)
+        internal static string GetHashFromSalPassword(string password, string salt)
         {
             var checkArguments = string.IsNullOrEmpty(password) || string.IsNullOrEmpty(salt);
             Contract.Requires<ArgumentNullException>(!checkArguments, "Password or salt is null");
