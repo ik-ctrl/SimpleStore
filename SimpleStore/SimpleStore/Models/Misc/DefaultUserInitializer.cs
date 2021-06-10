@@ -2,7 +2,6 @@
 using SimpleStore.Database;
 using SimpleStore.Database.DAL;
 using SimpleStore.Database.DAL.Enums;
-using SimpleStore.Misc;
 
 namespace SimpleStore.Models.Misc
 {

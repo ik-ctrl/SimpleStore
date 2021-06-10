@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SimpleStore.Database;
-using SimpleStore.Misc;
+using SimpleStore.Models.Misc;
 
 namespace SimpleStore
 {
@@ -20,7 +20,7 @@ namespace SimpleStore
                 try
                 {
                     var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
-                    context.Database.MigrateAsync();
+                    context.Database.Migrate();
                     if (!context.Users.Any())
                     {
                         DefaultUserInitializer.Initialize(context);
@@ -40,8 +40,7 @@ namespace SimpleStore
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                        .UseStartup<Startup>()
-                        .UseKestrel();
+                        .UseStartup<Startup>();
                 });
     }
 }

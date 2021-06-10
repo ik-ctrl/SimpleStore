@@ -25,7 +25,7 @@ namespace SimpleStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            RegistryDbContext(services);
+            services.AddDbContext<StoreContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
         }
 
@@ -57,17 +57,5 @@ namespace SimpleStore
             });
         }
 
-        /// <summary>
-        /// Регистрация DbContext
-        /// </summary>
-        /// <param name="services"></param>
-        private void RegistryDbContext(IServiceCollection services)
-        {
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            if (string.IsNullOrEmpty(connectionString))
-                connectionString =
-                    "Host=localhost;Port=5432;Database=StoreDatabase;Username=postgres;Password=postgres;ApplicationName=SimpleStore;ConnectionIdleLifetime=5";
-            services.AddDbContext<StoreContext>(opt => opt.UseNpgsql(connectionString));
-        }
     }
 }
