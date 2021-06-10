@@ -3,7 +3,7 @@ using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace SimpleStore.Misc
+namespace SimpleStore.Models.Misc
 {
     internal static class PasswordExtension
     {

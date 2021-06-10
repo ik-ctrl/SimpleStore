@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using SimpleStore.Database;
 using SimpleStore.Database.DAL;
 using SimpleStore.Database.DAL.Enums;
+using SimpleStore.Misc;
 
-namespace SimpleStore.Misc
+namespace SimpleStore.Models.Misc
 {
     public static class DefaultUserInitializer
     {
