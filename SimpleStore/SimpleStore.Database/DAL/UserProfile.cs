@@ -1,5 +1,7 @@
 ﻿namespace SimpleStore.Database.DAL
 {
+    //todo:
+    //todo:исправить модель нужно. убрать id
     public class UserProfile
     {
         /// <summary>
