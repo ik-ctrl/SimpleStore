@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NLog.Web;
 using SimpleStore.Database;
 using SimpleStore.Models.Misc;
 
@@ -14,10 +15,12 @@ namespace SimpleStore
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
-            using (var scope = host.Services.CreateScope())
+            
+            var logger = NLogBuilder.ConfigureNLog("Nlog.config").GetCurrentClassLogger();
+            try
             {
-                try
+                var host = CreateHostBuilder(args).Build();
+                using (var scope = host.Services.CreateScope())
                 {
                     var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
                     context.Database.Migrate();
@@ -26,13 +29,17 @@ namespace SimpleStore
                         DefaultUserInitializer.Initialize(context);
                     }
                 }
-                catch (Exception ex)
-                {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "DbContextError");
-                }
+                host.Run();
             }
-            host.Run();
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Init Error");
+            }
+            finally
+            {
+                NLog.LogManager.Shutdown();
+            }
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -40,7 +47,13 @@ namespace SimpleStore
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                        .UseStartup<Startup>();
+                        .UseStartup<Startup>()
+                        .ConfigureLogging(logging =>
+                        {
+                            logging.ClearProviders();
+                            logging.SetMinimumLevel(LogLevel.Error);
+                        })
+                        .UseNLog();
                 });
     }
 }

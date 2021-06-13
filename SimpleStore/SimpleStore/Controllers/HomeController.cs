@@ -20,6 +20,12 @@ namespace SimpleStore.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("info");
+            _logger.LogError("error");
+            _logger.LogTrace("Trace");
+            _logger.LogDebug("debug");
+            _logger.LogWarning("warning");
+            _logger.LogCritical("Crit");
             return View();
         }
 
