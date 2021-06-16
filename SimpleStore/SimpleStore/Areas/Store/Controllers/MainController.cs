@@ -14,7 +14,7 @@ namespace SimpleStore.Areas.Store.Controllers
         [Route("[area]/[controller]/[action]")]
         public IActionResult Index()
         {
-            return new EmptyResult();
+            return View();
         }
     }
 }
