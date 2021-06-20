@@ -1,0 +1,18 @@
+﻿html {
+    font-size: 14px;
+}
+
+@media (min-width:800px) {
+    html {
+        font-size: 25px;
+    }
+}
+
+/*navigation section*/
+.nav-menu {
+    background-color: darkgreen;
+}
+
+.div-custom:hover{
+    background-color: red;
+}
