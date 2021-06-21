@@ -1,18 +1,25 @@
 ﻿html {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 @media (min-width:800px) {
     html {
-        font-size: 25px;
+        font-size: 14px;
     }
 }
 
 /*navigation section*/
-.nav-menu {
+.custom-menu {
     background-color: darkgreen;
 }
 
-.div-custom:hover{
-    background-color: red;
+.custom-nav-menu {
+    list-style: none;
+       margin: 0;
+ padding-left: 0; 
 }
+.custom-nav-menu-item {
+    text-decoration: none;
+}
+
+/**/
