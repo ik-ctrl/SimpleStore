@@ -11,39 +11,54 @@
     <link rel="stylesheet" href="~/css/custom.css" />
 </head>
 <body>
-<header>
-    <nav>
-        <div class="center-container">
-            <ul class="custom-nav-menu bg-saphire center-container">
-                <li class="custom-nav-menu-item">
-                    <img src="~/images/main_logo.png"/>
-                </li>
-                <li class="custom-nav-menu-item">
-                    <a class="color-light" href="#">Категория</a>
-                </li>
-                @*<li class="custom-nav-menu-item">
-                <form>
+    <header>
+        <nav>
+            <div class="center-container">
+                <ul class="custom-nav-menu bg-saphire center-container">
+                    <li class="custom-nav-menu-item">
+                        <img src="~/images/main_logo.png" />
+                    </li>
+                    <li class="custom-nav-menu-item">
+                        <button
+                                type="button"
+                                data-toggle="collapse" 
+                                data-target="#collapsedMenu"
+                                aria-expanded="false" 
+                                aria-controls="collapsedMenu">Категория</button>
+                    </li>
+                    <li class="custom-nav-menu-item">
+                        <form class="custom-nav-menu-item searching-form">
+                            <select>
+                                <option value="all">Все</option>
+                            </select>
+                            <input type="text" placeholder="Введите название...."/>
+                            <button type="submit"> Поиск</button>
+                        </form>
+                    </li>
+                    <li class="custom-nav-menu-item color-light">
+                        <a class="color-light" href="#">Личный кабинет</a>
+                    </li>
+                    <li class="custom-nav-menu-item color-light">
+                        <a class="color-light" href="#">Заказы</a>
+                    </li>
 
-                </form>
-            </li>*@
-
-                <li class="custom-nav-menu-item color-light">
-                    <a class="color-light" href="#">Личный кабинет</a>
-                </li>
-                <li class="custom-nav-menu-item color-light">
-                    <a class="color-light" href="#">Заказы</a>
-                </li>
-
-                <li class="custom-nav-menu-item color-light">
-                    <a class="color-light" href="#">избранные</a>
-                </li>
-                <li class="custom-nav-menu-item color-light">
-                    <a class="color-light" href="#">Корзины</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
+                    <li class="custom-nav-menu-item color-light">
+                        <a class="color-light" href="#">избранные</a>
+                    </li>
+                    <li class="custom-nav-menu-item color-light">
+                        <a class="color-light" href="#">Корзины</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="collapse bg-black" id="#collapsedMenu">
+                @for(var i = 0; i <= 10; i++)
+                {
+                    <div class="color-light">Тест</div>
+                }
+            </div>
+        </nav>
+       
+    </header>
 
 
 

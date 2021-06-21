@@ -44,3 +44,11 @@ div > a:hover{
     margin: 0 auto;
     vertical-align: middle;
 }
+
+.searching-form {
+    border-color: red;
+}
+
+.bg-black {
+    background: #000000;
+}
