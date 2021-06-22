@@ -1,0 +1,71 @@
+<header>
+        <nav class="navbar navbar-expand-sm  navbar-dark bg-dark border-bottom mb-2">
+            <div class="container">
+                <div class="navbar-brand nav-item">
+                    <a asp-area="store" asp-controller="main" asp-action="index">
+                        <img src="~/images/main_logo.png"/>
+                    </a>
+                </div>
+                <div class="collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <button class="btn btn-outline-primary align-content-center"
+                                    type="button"
+                                    data-toggle="collapse" 
+                                    data-target="#collapsedMenu"
+                                    aria-expanded="false" 
+                                    aria-controls="collapsedMenu">Категория</button>
+                        </li>
+                        <li class="nav-item">
+                            <form class="form-inline">
+                                <select>
+                                    <option value="All">Везде</option>
+                                    <option value="books">Книги</option>
+                                </select>
+                                <input class="form-control" type="search" name="searchigItem" placeholder="Введите название товара" area-label="Поиск..."/>
+                                <button class="btn btn-primary" type="submit">Поиск</button>
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a>
+                                    <img src="~/images/icons/cabinet/unknown_80px.png"/>
+                                </a>
+                            }
+                            else
+                            {
+                                <a>
+                                    <img src="~/images/icons/cabinet/unknown_80px.png"/>
+                                </a>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            <a>
+                                <img src="~/images/icons/orders/orders_60px.png"/>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a>
+                                <img src="~/images/icons/cart/shopping_cart_80px.png"/>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+                
+                @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>*@
+
+                <!--<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">-->
+                @*</div>*@
+            </div>
+        </nav>
+        @*набор кнопок с категориями*@
+        <div class="collapse" id="collapsedMenu">
+            <div>тест</div>
+        </div>
+    </header>

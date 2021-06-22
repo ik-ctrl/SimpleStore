@@ -33,8 +33,7 @@ namespace SimpleStore
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseExceptionHandler("/Simple/Error");
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -46,9 +45,15 @@ namespace SimpleStore
 
             app.UseEndpoints(endpoints =>
             {
+
+                endpoints.MapAreaControllerRoute(
+                    "store_area",
+                    "store",
+                    "store/{controller=main}/{action=index}/{id?}");
+                
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=redirect}/{action=index}");
             });
         }
 

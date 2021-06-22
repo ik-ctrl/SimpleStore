@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Простой магазин с разным барахлом "/>
+    <title>Барахолка</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md bg-dark">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a asp-action="Index" asp-controller="Main" asp-area="Store">
+                        <img src="~/images/main_logo.png"/>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-primary"
+                            type="button"
+                            data-toggle="collapse" 
+                            data-target="#collapsedMenu"
+                            aria-expanded="false" 
+                            aria-controls="collapsedMenu">Категории</button>
+                </li>
+                <li class="nav-item">
+                    <form>
+                        <select >
+                            <option value="all"> Все</option>
+                            <option value="books">Книги</option>
+                        </select>
+                        <input type="search" placeholder="Введите название..."/>
+                        <button class="btn"> поиск</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a>
+                            <img src="~/images/icons/cabinet/authorized_50px.png"/>
+                        </a>
+                    }
+                    else
+                    {
+                        <a>
+                            <img src="~/images/icons/cabinet/unknown_50px.png"/>
+                        </a>
+                    }
+                </li>
+                <li class="nav-item">
+                    <a>
+                        <img src ="~/images/icons/cart/cart_50px.png"/>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a>
+                        <img src ="~/images/icons/favorites/favorites_50px.png"/>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a>
+                        <img src ="~/images/icons/orders/orders_50px.png"/>
+                    </a>
+                </li>
+            </uL>
+        </div>
+    </nav>
+    <div class="collapse" id="collapsedMenu">
+        <div>тест</div>
+    </div>
+</header>
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
