@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore", "SimpleStore\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Database", "SimpleStore.Database\SimpleStore.Database.csproj", "{A043CA6E-0C90-4204-B191-025FCE519822}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "helps", "helps", "{65FE0CF7-0A0B-4E0B-A0C4-406A0557C2F8}"
+	ProjectSection(SolutionItems) = preProject
+		code.txt = code.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
