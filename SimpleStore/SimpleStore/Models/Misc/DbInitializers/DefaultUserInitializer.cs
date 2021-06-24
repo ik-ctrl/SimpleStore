@@ -2,17 +2,18 @@
 using SimpleStore.Database;
 using SimpleStore.Database.DAL;
 using SimpleStore.Database.DAL.Enums;
+using SimpleStore.Models.Misc.DbInitializers;
 
 namespace SimpleStore.Models.Misc
 {
-    public static class DefaultUserInitializer
+    public class DefaultUserInitializer:IInitializer
     {
 
         /// <summary>
         /// Инициализация базы данных дефолтными  пользователями (админом и юзером)
         /// </summary>
         /// <param name="context"></param>
-        public static  void Initialize(StoreContext context)
+        public  void Initialize(StoreContext context)
         {
             var admin = CreateDefaultAdmin(context);
             var user = CreateDefaultUser(context);
@@ -25,7 +26,7 @@ namespace SimpleStore.Models.Misc
         /// </summary>
         /// <param name="context">контекст базы данных</param>
         /// <returns></returns>
-        private static User CreateDefaultAdmin(StoreContext context)
+        private  User CreateDefaultAdmin(StoreContext context)
         {
             var adminRole = context.Roles.FirstOrDefault(r => r.Role == Role.Admin);
 
@@ -54,7 +55,7 @@ namespace SimpleStore.Models.Misc
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        private static User CreateDefaultUser(StoreContext context)
+        private User CreateDefaultUser(StoreContext context)
         {
             var userRole = context.Roles.FirstOrDefault(r => r.Role == Role.User);
 
