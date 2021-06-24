@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
@@ -15,6 +16,7 @@ namespace SimpleStore
     {
         public static void Main(string[] args)
         {
+            //todo: добавить метод для проверки всех необходимых подключений перед запуском
             
             var logger = NLogBuilder.ConfigureNLog("Nlog.config").GetCurrentClassLogger();
             try
@@ -22,11 +24,18 @@ namespace SimpleStore
                 var host = CreateHostBuilder(args).Build();
                 using (var scope = host.Services.CreateScope())
                 {
-                    var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
-                    context.Database.Migrate();
-                    if (!context.Users.Any())
+                    using (var context = scope.ServiceProvider.GetRequiredService<StoreContext>())
                     {
-                        DefaultUserInitializer.Initialize(context);
+                        context.Database.Migrate();
+
+                        //todo: добавить tryParse потом и вынести метод
+                        var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+                        var isTestMode = Boolean.Parse(config.GetSection("TestMode").Value);
+                        if (isTestMode)
+                        {
+                            //todo: метод для очистки таблиц добавить
+
+                        }
                     }
                 }
                 host.Run();
