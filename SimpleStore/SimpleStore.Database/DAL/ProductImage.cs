@@ -12,7 +12,6 @@ namespace SimpleStore.Database.DAL
         /// <summary>
         /// Название изображения
         /// </summary>
-        /// todo: миграцию сделать 1
         public string Title { get; set; }
         
         /// <summary>
