@@ -29,6 +29,7 @@ namespace SimpleStore
                         var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
                         using (var context = scope.ServiceProvider.GetRequiredService<StoreContext>())
                         {
+                            //todo: цепочку об€занностей сделать
                             CheckDbConnection(context);
                             MigrateDataBase(context);
                             CheckingForTestMode(config, context);
@@ -48,6 +49,7 @@ namespace SimpleStore
             }
             catch (Exception ex)
             {
+                //todo: добавить какой-то нормальный способ логировани€:1. в файл 2. message box бахнуть
                 Console.WriteLine($"Ќе удалось инициализировать логгер:{ex.Message}.");
             }
         }
