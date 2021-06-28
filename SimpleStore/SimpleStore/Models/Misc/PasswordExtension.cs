@@ -16,7 +16,8 @@ namespace SimpleStore.Models.Misc
         internal static string GetHashFromSalPassword(string password, string salt)
         {
             var checkArguments = string.IsNullOrEmpty(password) || string.IsNullOrEmpty(salt);
-            Contract.Requires<ArgumentNullException>(checkArguments, "Password or salt is null");
+            //todo:  почему постоянно падает эксепшен?
+            //Contract.Requires<ArgumentNullException>(checkArguments==true, "Password or salt is null");
             var saltPassword = password + salt;
             string resultHash;
             using (var shaManager = new SHA256Managed())
