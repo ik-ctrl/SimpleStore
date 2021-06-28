@@ -84,12 +84,18 @@ namespace SimpleStore
         /// <param name="context"> Контекс Базы данных</param>
         private static void CheckingForTestMode(IConfiguration config, StoreContext context)
         {
-            var isTestMode = false;
-            if (bool.TryParse(config.GetSection("TestMode").Value, out isTestMode))
+            var testModeConfig = config.GetSection("TestMode");
+
+            if (bool.TryParse(testModeConfig["UseTestMode"], out var isTestMode))
             {
                 if (isTestMode)
                 {
-                    ClearDatabase(context);
+                    if(bool.TryParse(testModeConfig["ClearDatabase"], out var isNeedClearDatabase))
+                    {
+                        if(isNeedClearDatabase)
+                            ClearDatabase(context);
+                    }
+                    
                     var initialers = new List<IInitializer>
                     {
                         new DefaultUserInitializer(),
