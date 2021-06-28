@@ -24,24 +24,24 @@ namespace SimpleStore.Models.Services
         /// Возвращает первую страницу товаров
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Product>> GetFirstProductPage()
-        {
-            try
-            {
-                List<Product> products;
-                await using (_context)
-                {
-                    await Task.Delay(100000);
-                    products= _context.Products.Take(10).ToList();
-                }
-                return products;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("ну");
-            }
+        //public async Task<IEnumerable<Product>> GetFirstProductPage()
+        //{
+        //    try
+        //    {
+        //        List<Product> products;
+        //        await using (_context)
+        //        {
+        //            await Task.Delay(100000);
+        //            products= _context.Products.Take(10).ToList();
+        //        }
+        //        return products;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError("ну");
+        //    }
         
-        }
+        //}
 
     }
 }
