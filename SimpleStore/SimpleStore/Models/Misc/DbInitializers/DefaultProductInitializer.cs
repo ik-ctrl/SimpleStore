@@ -19,7 +19,7 @@ namespace SimpleStore.Models.Misc.DbInitializers
             var randomizer = new Random(DateTime.Now.Millisecond);
             for (var productIndex = 0; productIndex < 173; productIndex++)
             {
-                var product = GenerateProduct(productIndex,randomizer);
+                var product = GenerateProduct(context,productIndex,randomizer);
                 product.Images = GenerateProductImages(product,productIndex);
                 product.Reviews = GenerateProductReviews(context, randomizer, product);
                 context.Products.Add(product);
@@ -33,11 +33,11 @@ namespace SimpleStore.Models.Misc.DbInitializers
         /// <param name="productIndex">Номер продукта в очереди</param>
         /// <param name="randomizer">Механизм для рандомизации</param>
         /// <returns>Возвращает продукт с настройками(без фотографий и отзывов)</returns> 
-        private  Product GenerateProduct(int productIndex,Random randomizer)
+        private  Product GenerateProduct(StoreContext context,int productIndex,Random randomizer)
         {
 
             var price = randomizer.NextDouble();
-            var categoryTypeNumber = new int[] { 0, 10, 20, 30, 40 };
+            var categories = context.Categories.ToArray();
             return new Product()
             {
                 Name = $"Product #{productIndex + 1}",
@@ -45,10 +45,7 @@ namespace SimpleStore.Models.Misc.DbInitializers
                 Discount = randomizer.Next(0, 10),
                 ProductCount = randomizer.Next(1000, 2000),
                 Price = (price != 0.0 ? price : 0.3) * 1000,
-                Category = new ProductCategory()
-                {
-                    Category = (Category)categoryTypeNumber[randomizer.Next(0, 4)],
-                }
+                Category = categories[randomizer.Next(0,4)],
             };
         }
 

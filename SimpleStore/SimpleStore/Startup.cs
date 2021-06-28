@@ -33,6 +33,7 @@ namespace SimpleStore
             }
             else
             {
+                //todo:добавить  свой обработик ошибок
                 app.UseExceptionHandler("/Simple/Error");
                 app.UseHsts();
             }

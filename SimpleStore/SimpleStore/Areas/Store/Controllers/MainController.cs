@@ -14,8 +14,6 @@ namespace SimpleStore.Areas.Store.Controllers
         [Route("[area]/[controller]/[action]")]
         public IActionResult Index(int? pageNumber)
         {
-            
-            
             return View();
         }
     }
