@@ -12,7 +12,7 @@ namespace SimpleStore.Database.DAL
         /// <summary>
         /// Название изображения
         /// </summary>
-        public int Title { get; set; }
+        public string Title { get; set; }
         
         /// <summary>
         /// Путь до изображения относительно сервера

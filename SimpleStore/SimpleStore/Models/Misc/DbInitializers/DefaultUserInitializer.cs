@@ -3,16 +3,16 @@ using SimpleStore.Database;
 using SimpleStore.Database.DAL;
 using SimpleStore.Database.DAL.Enums;
 
-namespace SimpleStore.Models.Misc
+namespace SimpleStore.Models.Misc.DbInitializers
 {
-    public static class DefaultUserInitializer
+    public class DefaultUserInitializer:IInitializer
     {
 
         /// <summary>
         /// Инициализация базы данных дефолтными  пользователями (админом и юзером)
         /// </summary>
         /// <param name="context"></param>
-        public static  void Initialize(StoreContext context)
+        public  void Initialize(StoreContext context)
         {
             var admin = CreateDefaultAdmin(context);
             var user = CreateDefaultUser(context);
@@ -21,11 +21,21 @@ namespace SimpleStore.Models.Misc
         }
 
         /// <summary>
+        /// Инициализация юзера с роль admin
+        /// </summary>
+        /// <param name="context">Контекст базы данных</param>
+        public void InitializeDefaultAdmin(StoreContext context)
+        {
+            context.Users.Add(CreateDefaultAdmin(context));
+            context.SaveChanges();
+        }
+
+        /// <summary>
         /// Создания пользователя по умолчанию с ролью админ 
         /// </summary>
-        /// <param name="context">контекст базы данных</param>
-        /// <returns></returns>
-        private static User CreateDefaultAdmin(StoreContext context)
+        /// <param name="context">Контекст базы данных</param>
+        /// <returns>Пользователь с ролью admin</returns>
+        private User CreateDefaultAdmin(StoreContext context)
         {
             var adminRole = context.Roles.FirstOrDefault(r => r.Role == Role.Admin);
 
@@ -53,8 +63,8 @@ namespace SimpleStore.Models.Misc
         /// Создания пользователя по умолчанию с ролью простой пользователь 
         /// </summary>
         /// <param name="context"></param>
-        /// <returns></returns>
-        private static User CreateDefaultUser(StoreContext context)
+        /// <returns>Пользователь с ролью user</returns>
+        private User CreateDefaultUser(StoreContext context)
         {
             var userRole = context.Roles.FirstOrDefault(r => r.Role == Role.User);
 

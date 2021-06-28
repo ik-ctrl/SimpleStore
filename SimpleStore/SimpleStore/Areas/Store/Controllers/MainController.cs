@@ -12,7 +12,7 @@ namespace SimpleStore.Areas.Store.Controllers
         [Route("[area]")]
         [Route("[area]/[controller]")]
         [Route("[area]/[controller]/[action]")]
-        public IActionResult Index()
+        public IActionResult Index(int? pageNumber)
         {
             return View();
         }
