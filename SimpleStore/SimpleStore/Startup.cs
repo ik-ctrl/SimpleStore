@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SimpleStore.Database;
+using SimpleStore.Models.Services;
 
 namespace SimpleStore
 {
@@ -20,7 +21,11 @@ namespace SimpleStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<StoreContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<StoreContext>(
+                opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
+                );
+            //services.AddTransient<ProductService>(()=>new ProductService(context,logger));
+
             services.AddControllersWithViews();
         }
 
