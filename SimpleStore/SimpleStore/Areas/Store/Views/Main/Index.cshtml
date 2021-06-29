@@ -1,3 +1,25 @@
-﻿@{
+﻿@model SimpleStore.ViewModels.StoreViewModels.IndexViewModel
+@{
     Layout = "_Layout";
 }
+
+@if (Model.ProductsCount != 0)
+{
+    @foreach (var vm in Model.Products)
+    {
+        <div>@vm.Name | @vm.Price</div>
+    }
+
+    @for (var pageNumber = 1; pageNumber <= Model.FinalPageNumber; pageNumber++)
+    {
+        <a href="/store/main/index/@pageNumber">@pageNumber</a>
+    }
+
+}
+else
+{
+    <div>Товары отсутвуют</div>
+}
+
+
+
