@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using SimpleStore.Database;
 using SimpleStore.Database.DAL;
 
@@ -12,59 +10,43 @@ namespace SimpleStore.Models.Services
     public class ProductService
     {
         private readonly StoreContext _context;
-        private readonly ILogger<ProductService> _logger;
-        
-        public ProductService(StoreContext context,ILogger<ProductService> logger)
+
+        public ProductService(StoreContext context)
         {
             _context = context;
-            _logger = logger;
         }
 
         /// <summary>
-        /// Возвращает первую страницу товаров
+        /// Формирует список из 10 товаров
         /// </summary>
-        /// <returns></returns>
-        public async Task<IEnumerable<Product>> GetFirstProductPage()
+        /// <param name="currentPageNumber">Текущая страница</param>
+        /// <param name="previousPageNumber">Предыдущая страница</param>
+        /// <returns>Список из 10 товаров</returns>
+        public async Task<IEnumerable<Product>> GetProductPage(int currentPageNumber, int previousPageNumber)
         {
-            try
-            {
-                List<Product> products;
-                await using (_context)
-                {
-                    await Task.Delay(100000);
-                    products = _context.Products.Take(10).ToList();
-                }
-                return products;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Не удалось сформировать таблицу продуктов",e);
-                return new List<Product>();
-            }
+            //await Task.Delay(10000);
+            return await _context.Products.Skip(previousPageNumber*10).Take(10).ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>> GetProductPage(int? pageNumber)
+        /// <summary>
+        /// Возвращает номер последей страницы
+        /// </summary>
+        /// <returns>Номер последней страницы</returns>
+        public int GetLastPageNumber()
         {
-            if (pageNumber == null)
+            //todo:  может стоит вынести в настройки  количество продуктов на странице
+            var productCount =  _context.Products.Count();
+            var finalPageNumber = productCount / 10;
+            if (productCount % 10 != 0)
             {
-
+                finalPageNumber += 1;
             }
-            try
-            {
-                List<Product> products;
-                await using (_context)
-                {
-                    await Task.Delay(100000);
-                    products = _context.Products.Take(10).ToList();
-                }
-                return products;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Не удалось сформировать таблицу продуктов", e);
-                return new List<Product>();
-            }
+            return finalPageNumber;
         }
 
+        //public void Dispose()
+        //{
+        //    _context?.Dispose();
+        //}
     }
 }
