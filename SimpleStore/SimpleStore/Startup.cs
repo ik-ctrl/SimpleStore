@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SimpleStore.Database;
+using SimpleStore.Database.DAL;
+using SimpleStore.Models.Services;
 
 namespace SimpleStore
 {
@@ -21,6 +23,7 @@ namespace SimpleStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<StoreContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<ProductService>();
             services.AddControllersWithViews();
         }
 
