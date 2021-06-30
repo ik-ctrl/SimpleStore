@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SimpleStore.Database;
 using SimpleStore.Database.DAL;
@@ -14,15 +15,19 @@ namespace SimpleStore.Areas.Store.Controllers
     [Area("Store")]
     public class MainController:Controller
     {
+        //todo: зачем передавать сюда контекст  если вся работа происходит через сервисы
         private readonly StoreContext _context;
+
         private readonly ILogger<MainController> _logger;
         private readonly ProductService _productService;
+        private readonly IConfigurationSection _settings;
 
-        public MainController(StoreContext context,ILogger<MainController> logger,ProductService productService)
+        public MainController(StoreContext context,ILogger<MainController> logger,ProductService productService,IConfiguration config)
         {
             _context = context;
             _logger = logger;
             _productService = productService;
+            _settings = config.GetSection("AppSettings");
         }
         
         /// <summary>
@@ -35,11 +40,12 @@ namespace SimpleStore.Areas.Store.Controllers
         [Route("[area]/[controller]")]
         [Route("[area]/[controller]/[action]")]
         [Route("[area]/[controller]/[action]/{pageNumber?}")]
-        public async Task<IActionResult> Index(int? pageNumber)
+        public  IActionResult GetProducts(int? pageNumber)
         {
             var currentPage = 1;
             var previousPage = 0;
             var finalPageNumber = currentPage;
+
             if (pageNumber.HasValue&&pageNumber!=1)
             {
                 currentPage = pageNumber.Value;
@@ -49,8 +55,8 @@ namespace SimpleStore.Areas.Store.Controllers
             IEnumerable<Product> products;
             try
             {
-                products = await _productService.GetProductPage(currentPage, previousPage);
-                finalPageNumber = _productService.GetLastPageNumber();
+                products =  _productService.GetProductPage( previousPage,10);
+                finalPageNumber = _productService.GetLastPageNumber(10);
             }
             catch (Exception ex)
             {
@@ -60,7 +66,12 @@ namespace SimpleStore.Areas.Store.Controllers
             
             var productsViewModels = ModelConverter.ProductsToProductViewModels(products);
             var indexViewModel = new IndexViewModel(productsViewModels, currentPage, finalPageNumber);
-            return View(indexViewModel);
+            return View("Index",indexViewModel);
+        }
+
+        public IActionResult GetFilteredProducts()
+        {
+            return View("Index");
         }
     }
 }
