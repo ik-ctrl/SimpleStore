@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SimpleStore.Database;
 using SimpleStore.Database.DAL;
+using SimpleStore.Models.Enums;
 using SimpleStore.Models.Misc;
 using SimpleStore.Models.Services;
 using SimpleStore.ViewModels.StoreViewModels;
@@ -40,7 +41,7 @@ namespace SimpleStore.Areas.Store.Controllers
         [Route("[area]/[controller]")]
         [Route("[area]/[controller]/[action]")]
         [Route("[area]/[controller]/[action]/{pageNumber?}")]
-        public  IActionResult GetProducts(int? pageNumber)
+        public  IActionResult Index(int? pageNumber)
         {
             var currentPage = 1;
             var previousPage = 0;
@@ -69,8 +70,20 @@ namespace SimpleStore.Areas.Store.Controllers
             return View("Index",indexViewModel);
         }
 
-        public IActionResult GetFilteredProducts()
+        [HttpGet]
+        [Route("[area]/[controller]/[action]/{type?}_{text?}")]
+        public IActionResult GetFilteredProducts(ProductCategoryEnum type,string text,int? pageNumber)
         {
+            
+            //1. проверка на тип продукта
+            //  а. все продукты -> text  ищет по всем продуктам и формирует страницы
+            //  б. определенный тип продутка -> text  ищет только в опредленной группе
+            //2. проверка на текст. 
+            //  а. пришел текст пустой или  null-> формируем список товаров по группе
+            //  б. что то помиио null-> формируем список товаров по группе и тексту
+            //3. пришла страница
+            //  а. страница null-> отдаём первые 10 товаров
+            //  б. страница !=null->формируем с нужной страницы товары
             return View("Index");
         }
     }
