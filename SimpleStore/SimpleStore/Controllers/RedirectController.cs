@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 
 namespace SimpleStore.Controllers
 {
+
+    //todo: снести этот контроллер. чтобы потом сразу было направление на  сторе
     public class RedirectController : Controller
     {
         private readonly ILogger<RedirectController> _logger;
