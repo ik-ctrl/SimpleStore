@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="DesignDb\dbSettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="DesignDb\SimpleDesignFactory.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
