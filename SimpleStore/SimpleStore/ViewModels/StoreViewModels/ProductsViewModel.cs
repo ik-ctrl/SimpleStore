@@ -6,10 +6,10 @@ namespace SimpleStore.ViewModels.StoreViewModels
     /// <summary>
     /// Модель представления для Index.html
     /// </summary>
-    public class IndexViewModel
+    public class ProductsViewModel
     {
 
-        public IndexViewModel(IEnumerable<ProductViewModel> productViewModels,int currentPageNumber,int finalPageNumber)
+        public ProductsViewModel(IEnumerable<ProductViewModel> productViewModels,int currentPageNumber,int finalPageNumber)
         {
             //todo: может стоит сразу передавать  лист?
             var viewModels = productViewModels.ToList();

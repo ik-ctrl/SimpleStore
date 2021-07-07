@@ -14,7 +14,7 @@ using SimpleStore.ViewModels.StoreViewModels;
 namespace SimpleStore.Areas.Store.Controllers
 {
     [Area("Store")]
-    public class MainController:Controller
+    public class MainController : Controller
     {
         //todo: зачем передавать сюда контекст  если вся работа происходит через сервисы
         private readonly StoreContext _context;
@@ -23,14 +23,14 @@ namespace SimpleStore.Areas.Store.Controllers
         private readonly ProductService _productService;
         private readonly IConfigurationSection _settings;
 
-        public MainController(StoreContext context,ILogger<MainController> logger,ProductService productService,IConfiguration config)
+        public MainController(StoreContext context, ILogger<MainController> logger, ProductService productService, IConfiguration config)
         {
             _context = context;
             _logger = logger;
             _productService = productService;
             _settings = config.GetSection("AppSettings");
         }
-        
+
         /// <summary>
         /// Возвращает список из 10 продуктов в зависимости от страницы
         /// </summary>
@@ -41,13 +41,13 @@ namespace SimpleStore.Areas.Store.Controllers
         [Route("[area]/[controller]")]
         [Route("[area]/[controller]/[action]")]
         [Route("[area]/[controller]/[action]/{pageNumber?}")]
-        public  IActionResult Index(int? pageNumber)
+        public IActionResult GetProducts(int? pageNumber)
         {
             var currentPage = 1;
             var previousPage = 0;
             var finalPageNumber = currentPage;
 
-            if (pageNumber.HasValue&&pageNumber!=1)
+            if (pageNumber.HasValue && pageNumber != 1)
             {
                 currentPage = pageNumber.Value;
                 previousPage = currentPage - 1;
@@ -56,35 +56,58 @@ namespace SimpleStore.Areas.Store.Controllers
             IEnumerable<Product> products;
             try
             {
-                products =  _productService.GetProductPage( previousPage,10);
+                products = _productService.GetProductPage(previousPage, 10);
                 finalPageNumber = _productService.GetLastPageNumber(10);
             }
             catch (Exception ex)
             {
-                _logger.LogError("Не удалось сформировать список товаров.",ex);
+                _logger.LogError("Не удалось сформировать список товаров.", ex);
                 products = new List<Product>();
             }
-            
+
+            //todo: поработать над названиями
             var productsViewModels = ModelConverter.ProductsToProductViewModels(products);
-            var indexViewModel = new IndexViewModel(productsViewModels, currentPage, finalPageNumber);
-            return View("Index",indexViewModel);
+            var indexViewModel = new ProductsViewModel(productsViewModels, currentPage, finalPageNumber);
+            return View("GetProducts", indexViewModel);
         }
 
         [HttpGet]
         [Route("[area]/[controller]/[action]/{type?}_{text?}")]
-        public IActionResult GetFilteredProducts(ProductCategoryEnum type,string text,int? pageNumber)
+        public IActionResult GetFilteredProducts(ProductCategoryEnum type, string text, int? pageNumber)
         {
-            
-            //1. проверка на тип продукта
-            //  а. все продукты -> text  ищет по всем продуктам и формирует страницы
-            //  б. определенный тип продутка -> text  ищет только в опредленной группе
-            //2. проверка на текст. 
-            //  а. пришел текст пустой или  null-> формируем список товаров по группе
-            //  б. что то помиио null-> формируем список товаров по группе и тексту
-            //3. пришла страница
-            //  а. страница null-> отдаём первые 10 товаров
-            //  б. страница !=null->формируем с нужной страницы товары
-            return View("Index");
+            var searchingText = string.Empty;
+            var productType = ProductCategoryEnum.All;
+            var filteredProducts = new List<Product>();
+
+            if (!string.IsNullOrEmpty(text.Trim()))
+                searchingText = text.Trim();
+
+
+            if (!type.Equals(ProductCategoryEnum.All))
+                productType = type;
+
+            if (productType != ProductCategoryEnum.All)
+            {
+
+
+            }
+            else
+            {
+                if(!string.IsNullOrEmpty(searchingText))
+                    //todo:то фильтруем
+            }
+
+
+                //1. проверка на тип продукта
+        //  а. все продукты -> text  ищет по всем продуктам и формирует страницы
+        //  б. определенный тип продутка -> text  ищет только в опредленной группе
+        //2. проверка на текст. 
+        //  а. пришел текст пустой или  null-> формируем список товаров по группе
+        //  б. что то помиио null-> формируем список товаров по группе и тексту
+        //3. пришла страница
+        //  а. страница null-> отдаём первые 10 товаров
+        //  б. страница !=null->формируем с нужной страницы товары
+        return View("GetProducts");
         }
     }
 }

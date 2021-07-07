@@ -53,7 +53,8 @@ namespace SimpleStore
                 endpoints.MapAreaControllerRoute(
                     "store_area",
                     "store",
-                    "store/{controller=main}/{action=index}/{id?}");
+                    "store/{controller=main}/{action=getproducts}/{id?}");
+                
                 
                 endpoints.MapControllerRoute(
                     name: "default",
