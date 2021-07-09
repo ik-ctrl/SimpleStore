@@ -41,7 +41,7 @@ namespace SimpleStore.Areas.Store.Controllers
         [Route("[area]/[controller]")]
         [Route("[area]/[controller]/[action]")]
         [Route("[area]/[controller]/[action]/{pageNumber?}")]
-        public IActionResult GetProducts(int? pageNumber)
+        public IActionResult Getproducts(int? pageNumber)
         {
             var currentPage = 1;
             var previousPage = 0;
@@ -72,42 +72,44 @@ namespace SimpleStore.Areas.Store.Controllers
         }
 
         [HttpGet]
-        [Route("[area]/[controller]/[action]/{type?}_{text?}")]
+        [Route("[area]/[controller]/[action]/{type}/{text}/{page?}")]
         public IActionResult GetFilteredProducts(ProductCategoryEnum type, string text, int? pageNumber)
         {
-            var searchingText = string.Empty;
-            var productType = ProductCategoryEnum.All;
-            var filteredProducts = new List<Product>();
+            //    var searchingText = string.Empty;
+            //    var productType = ProductCategoryEnum.All;
+            //    var filteredProducts = new List<Product>();
 
-            if (!string.IsNullOrEmpty(text.Trim()))
-                searchingText = text.Trim();
-
-
-            if (!type.Equals(ProductCategoryEnum.All))
-                productType = type;
-
-            if (productType != ProductCategoryEnum.All)
-            {
+            //    if (!string.IsNullOrEmpty(text.Trim()))
+            //        searchingText = text.Trim();
 
 
-            }
-            else
-            {
-                if(!string.IsNullOrEmpty(searchingText))
-                    //todo:то фильтруем
-            }
+            //    if (!type.Equals(ProductCategoryEnum.All))
+            //        productType = type;
+
+            //    if (productType != ProductCategoryEnum.All)
+            //    {
 
 
-                //1. проверка на тип продукта
-        //  а. все продукты -> text  ищет по всем продуктам и формирует страницы
-        //  б. определенный тип продутка -> text  ищет только в опредленной группе
-        //2. проверка на текст. 
-        //  а. пришел текст пустой или  null-> формируем список товаров по группе
-        //  б. что то помиио null-> формируем список товаров по группе и тексту
-        //3. пришла страница
-        //  а. страница null-> отдаём первые 10 товаров
-        //  б. страница !=null->формируем с нужной страницы товары
-        return View("GetProducts");
+            //    }
+            //    else
+            //    {
+            //        if(!string.IsNullOrEmpty(searchingText))
+            //            //todo:то фильтруем
+            //    }
+
+
+            //        //1. проверка на тип продукта
+            ////  а. все продукты -> text  ищет по всем продуктам и формирует страницы
+            ////  б. определенный тип продутка -> text  ищет только в опредленной группе
+            ////2. проверка на текст. 
+            ////  а. пришел текст пустой или  null-> формируем список товаров по группе
+            ////  б. что то помиио null-> формируем список товаров по группе и тексту
+            ////3. пришла страница
+            ////  а. страница null-> отдаём первые 10 товаров
+            ////  б. страница !=null->формируем с нужной страницы товары
+
+            var vm = new ProductsViewModel(new List<ProductViewModel>(),1,2);
+        return View("GetProducts",vm);
         }
     }
 }
