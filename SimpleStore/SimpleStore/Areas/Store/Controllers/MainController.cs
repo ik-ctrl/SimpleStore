@@ -73,7 +73,7 @@ namespace SimpleStore.Areas.Store.Controllers
 
         [HttpGet]
         [Route("[area]/[controller]/[action]/{type}/{text}/{page?}")]
-        public IActionResult GetFilteredProducts(ProductCategoryEnum type, string text, int? pageNumber)
+        public IActionResult GetFilteredProducts(ProductCategoryViewModel type, string text, int? pageNumber)
         {
             //    var searchingText = string.Empty;
             //    var productType = ProductCategoryEnum.All;

@@ -5,7 +5,7 @@ namespace SimpleStore.Models.Enums
     /// <summary>
     /// Представление товаров для фильтрации 
     /// </summary>
-    public enum ProductCategoryEnum
+    public enum ProductCategoryViewModel
     {
         [Display(Name = "Все")]
         All =-1,
