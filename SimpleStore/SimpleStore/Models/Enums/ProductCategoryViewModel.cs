@@ -8,16 +8,16 @@ namespace SimpleStore.Models.Enums
     public enum ProductCategoryViewModel
     {
         [Display(Name = "Все")]
-        All =-1,
+        All =0,
         [Display(Name = "Книги")]
-        Books = 0,
+        Books = 10,
         [Display(Name = "Электроника")]
-        Electronics = 10,
+        Electronics = 20,
         [Display(Name = "Одежда")]
-        Wear = 20,
+        Wear = 30,
         [Display(Name = "Спорт")]
-        Sports = 30,
+        Sports = 40,
         [Display(Name = "Обувь")]
-        Footwear = 40,
+        Footwear = 50,
     }
 }

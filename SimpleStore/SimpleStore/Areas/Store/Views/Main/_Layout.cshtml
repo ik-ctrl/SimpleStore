@@ -29,11 +29,9 @@
                 </li>
                 <li class="nav-item">
                     <form class="d-inline-flex">
-                        @Html.DropDownList("product-category",
-                            Html.GetEnumSelectList<ProductCategoryViewModel>(),
-                            "Тип продукта"/*,new { @class = "form-control" }*/)
-                        <input type="search" placeholder="Введите название..."/>
-                        <button class="btn btn-primary"> Поиск</button>
+                        @Html.DropDownList("category", Html.GetEnumSelectList<ProductCategoryViewModel>())
+                        <input type="search" name="searchText" placeholder="Введите название..."/>
+                        <button class="btn btn-primary" asp-area="Store" asp-controller="Main" asp-action="GetFilteredProducts"> Поиск</button>
                     </form>
                 </li>
                 <li class="nav-item">

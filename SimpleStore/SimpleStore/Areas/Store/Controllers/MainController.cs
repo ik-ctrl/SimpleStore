@@ -72,8 +72,8 @@ namespace SimpleStore.Areas.Store.Controllers
         }
 
         [HttpGet]
-        [Route("[area]/[controller]/[action]/{type}/{text}/{page?}")]
-        public IActionResult GetFilteredProducts(ProductCategoryViewModel type, string text, int? pageNumber)
+        [Route("[area]/[controller]/[action]/{category?}")]
+        public IActionResult GetFilteredProducts(ProductCategoryViewModel category, string searchText, int? pageNumber)
         {
             //    var searchingText = string.Empty;
             //    var productType = ProductCategoryEnum.All;
@@ -108,6 +108,9 @@ namespace SimpleStore.Areas.Store.Controllers
             ////  а. страница null-> отдаём первые 10 товаров
             ////  б. страница !=null->формируем с нужной страницы товары
 
+            var k = category;
+            var b = searchText;
+            var c = pageNumber;
             var vm = new ProductsViewModel(new List<ProductViewModel>(),1,2);
         return View("GetProducts",vm);
         }

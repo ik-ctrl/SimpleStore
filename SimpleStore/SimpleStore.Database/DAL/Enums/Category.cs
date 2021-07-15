@@ -6,10 +6,10 @@
     /// </summary>
     public enum Category
     {
-        Books=0,
-        Electronics=10,
-        Wear=20,
-        Sports=30,
-        Footwear=40,
+        Books=10,
+        Electronics=20,
+        Wear=30,
+        Sports=40,
+        Footwear=50,
     }
 }
