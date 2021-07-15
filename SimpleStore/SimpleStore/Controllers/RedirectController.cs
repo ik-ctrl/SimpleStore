@@ -23,7 +23,7 @@ namespace SimpleStore.Controllers
         {
             try
             {
-                return Redirect("store/main/index");
+                return Redirect("store/main/getproducts");
             }
             catch (Exception ex)
             {
